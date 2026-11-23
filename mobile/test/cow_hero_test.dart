@@ -9,10 +9,12 @@ class _FarmApi extends Api {
     user={'id':'cow-hero-test','name':'Farmer','email':'example@example.invalid'};
   }
   @override Future<dynamic> get(String path) async {
-    if(path=='/api/farms')return [
+    if (path == '/api/farms') {
+      return [
       {'id':'farm-1','name':'My Cattle Farm','role':'farm_manager',
        'permissions':['dashboard.view','animals.view']}
-    ];
+      ];
+    }
     if(path.endsWith('/summary')) return {'animals':1};
     return <dynamic>[];
   }

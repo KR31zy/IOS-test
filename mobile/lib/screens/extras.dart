@@ -1,5 +1,4 @@
 import 'dart:io';
-import 'dart:typed_data';
 import '../core/appearance.dart';
 import '../core/profile_photo.dart';
 import 'package:flutter/material.dart';
@@ -242,8 +241,11 @@ class _SettingsPageState extends State<SettingsPage> {
       const Text('AniRepro 360 • Mobile 2.4'),
       const SizedBox(height:16),
       OutlinedButton.icon(onPressed:busy?null:()async{
-        if(widget.api.pending.isNotEmpty&&!await confirm(c,
-          'Pending records remain encrypted on this device and can only be recovered by signing in to the same account online. Sign out?'))return;
+        if (widget.api.pending.isNotEmpty &&
+            !await confirm(c,
+              'Pending records remain encrypted on this device and can only be recovered by signing in to the same account online. Sign out?')) {
+          return;
+        }
         try{await PushService.instance.disable(widget.api);await widget.api.logout();}
         catch(e){if(c.mounted)toast(c,e);}
       },icon:const Icon(Icons.logout),label:const Text('Sign out')),

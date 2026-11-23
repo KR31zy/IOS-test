@@ -7,9 +7,11 @@ import 'package:anirepro360_mobile/screens/workspace.dart';
 class _LocalApi extends Api {
   _LocalApi() {user={'id':'test-user','name':'Test Farmer','email':'test@example.invalid'};}
   @override Future<dynamic> get(String path)async{
-    if(path=='/api/farms')return [
+    if (path == '/api/farms') {
+      return [
       {'id':'farm-test','name':'Farm Test','role':'farm_manager','permissions':['dashboard.view']}
-    ];
+      ];
+    }
     if(path.endsWith('/summary'))return {'animals':0};
     if(path=='/api/me')return {'name':'Test Farmer','email':'test@example.invalid','farms':[]};
     return [];
