@@ -1,0 +1,19 @@
+AniRepro 360 Mobile 2.4 - Local Verification
+
+Original logo, app_icon and Google symbol checked byte-for-byte against mobile(1).zip: PASS
+Backend regression tests: 28 PASSED (PYTHONPATH=server python3 -m pytest -q server/tests)
+Dart source/test import checks: 37 checked - PASS (python3 tools/verify_source.py)
+Android/iOS configuration fixtures: PASS (generated in temporary fixtures)
+Shell build helper syntax: PASS (bash -n BUILD_ANDROID_TEST_APK.command)
+Cow hero photo is packaged in assets/herd-hero.jpg and referenced from Home and onboarding.
+Flutter analyze: NOT RUN (Flutter SDK unavailable in this container)
+Flutter test: NOT RUN (Flutter SDK unavailable in this container)
+Android APK compilation: NOT RUN (Flutter and Android SDK unavailable here)
+Actual Pixel/Samsung installation: NOT RUN
+Clinical reference and gestational calculations: INCOMPLETE against the SRS; no fake calculations added.
+
+For native acceptance:
+  flutter pub get
+  flutter analyze
+  flutter test
+  flutter build apk --debug --dart-define=APP_ENV=development

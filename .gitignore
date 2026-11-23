@@ -1,0 +1,21 @@
+# Prevent accidental secrets, builds, and local test data in the public source repo.
+.DS_Store
+**/.DS_Store
+**/.env
+**/.venv/
+**/__pycache__/
+**/.pytest_cache/
+**/.dart_tool/
+**/build/
+**/Pods/
+**/DerivedData/
+**/.runtime/
+**/private-attachments/
+**/key.properties
+**/*.keystore
+**/*.jks
+**/*.p8
+**/*.p12
+**/*.mobileprovision
+**/GoogleService-Info.plist
+**/google-services.json

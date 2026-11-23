@@ -1,0 +1,5 @@
+# AniRepro 360 companion API (already patched)
+
+This copy of the original supplied FastAPI server includes the username migration `m20261119_username`, eight-character minimum for new/reset passwords, email-login compatibility and explicit UTC clinical event output. This server is not deployed and does not contain your existing database. The original repository's backend has not been overwritten.
+
+See `../README.md` and `../docs/RELEASE.md` for source/build and shared-data guidance, and `../docs/QA_FINAL.md` for verification. `../tools/start_test_server.py` is an isolated development-only launcher, not a production deployment. The existing web and mobile app must connect to one shared API environment for shared records. Production requires PostgreSQL, persistent secrets, HTTPS, SMTP, backups and administrator-approved migration. Do not use the optional username patch again on this copy. If using optional remote push, review the gateway in `../tools/push_gateway.py` and the credential configuration in `../docs/UPDATE_1_4.md`; do not place server credentials inside a client build.

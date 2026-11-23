@@ -1,0 +1,47 @@
+# AniRepro 360 Mobile 2.4 - iOS cloud compilation check.
+# The first workflow deliberately does NOT sign, publish, or deploy anything.
+# Repo structure: codemagic.yaml at root, Flutter app at mobile/.
+workflows:
+  ios-compile-check:
+    name: AniRepro 360 - iOS compile check (unsigned)
+    instance_type: mac_mini_m2
+    max_build_duration: 120
+    environment:
+      flutter: "3.38.4"
+      xcode: "26.4"
+      cocoapods: default
+    scripts:
+      - name: Check cloud tools and project contents
+        script: |
+          set -eu
+          flutter --version
+          xcodebuild -version
+          test -f mobile/pubspec.yaml
+          test -f mobile/tools/bootstrap.py
+      - name: Generate native projects and verify Flutter
+        script: |
+          set -eu
+          cd mobile
+          python3 tools/bootstrap.py --check
+      - name: Show generated iOS bundle identity
+        script: |
+          set -eu
+          grep 'PRODUCT_BUNDLE_IDENTIFIER =' mobile/ios/Runner.xcodeproj/project.pbxproj | sort -u
+      - name: Resolve iOS CocoaPods dependencies
+        script: |
+          set -eu
+          cd mobile/ios
+          pod install
+      - name: Compile iOS application without signing
+        script: |
+          set -eu
+          cd mobile
+          flutter build ios --debug --no-codesign
+          test -d build/ios/iphoneos/Runner.app
+          cd build/ios/iphoneos
+          ditto -c -k --sequesterRsrc --keepParent Runner.app Runner-unsigned.zip
+          echo 'Unsigned compile succeeded. This ZIP cannot be installed on a physical iPhone.'
+    artifacts:
+      - mobile/build/ios/iphoneos/Runner-unsigned.zip
+      - mobile/build/ios/iphoneos/Runner.app/**
+      - /tmp/xcodebuild_logs/*.log

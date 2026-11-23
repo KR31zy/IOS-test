@@ -1,0 +1,30 @@
+> /opt/pyvenv/bin/python /mnt/data/work21/mobile/tools/verify_source.py
+Local notification platform configuration updated. Firebase provisioning is separate.
+Local notification platform configuration updated. Firebase provisioning is separate.
+PASS: 28 Dart source/test import checks, Python syntax, PNG headers, Android/iOS configuration fixtures (including repeat execution).
+> /opt/pyvenv/bin/python -m alembic upgrade head
+INFO  [alembic.runtime.migration] Context impl SQLiteImpl.
+INFO  [alembic.runtime.migration] Will assume non-transactional DDL.
+INFO  [alembic.runtime.migration] Running upgrade  -> bff1a7f474c6, Initial server-owned farm animal event schema
+INFO  [alembic.runtime.migration] Running upgrade bff1a7f474c6 -> c0d42026, Add date of birth and initial weight to animal profiles.
+INFO  [alembic.runtime.migration] Running upgrade c0d42026 -> d4e2026, Recoverable accounts, idempotent offline replay and encrypted attachments.
+INFO  [alembic.runtime.migration] Running upgrade d4e2026 -> e20261113, One-time secure team invitations for farm membership.
+INFO  [alembic.runtime.migration] Running upgrade e20261113 -> f1a72026, Durable recipient-scoped notifications.
+INFO  [alembic.runtime.migration] Running upgrade e20261113 -> f20261118, Archive reproduction events without deleting their audit history.
+INFO  [alembic.runtime.migration] Running upgrade f20261118, f1a72026 -> f220261119, Merge the notifications and event archive migration branches.
+INFO  [alembic.runtime.migration] Running upgrade f220261119 -> m20261119_username, Add optional unique usernames for mobile authentication.
+INFO  [alembic.runtime.migration] Running upgrade m20261119_username -> m20261119_social, Social identities and short-lived sign-in transactions.
+> /opt/pyvenv/bin/python -m alembic current
+INFO  [alembic.runtime.migration] Context impl SQLiteImpl.
+INFO  [alembic.runtime.migration] Will assume non-transactional DDL.
+m20261119_social (head)
+> /opt/pyvenv/bin/python /mnt/data/work21/mobile/tools/test_username_auth.py
+PASS: registration, username/email login, CSRF logout, farm access, username change, uniqueness, eight-character minimum.
+> /opt/pyvenv/bin/python -m pytest -q tests
+............................                                             [100%]
+28 passed in 8.46s
+> /opt/pyvenv/bin/python /mnt/data/work21/mobile/tools/test_sync_contract.py /mnt/data/work21/mobile/server
+PASS: animal replay, changed payload rejection, event replay, changed event rejection, transactional offspring replay, authenticated replay requirement.
+> /opt/pyvenv/bin/python /mnt/data/work21/mobile/tools/test_push_gateway.py /mnt/data/work21/mobile/server
+PASS: authenticated registration, CSRF, new unread only, deduplication, unregister and expiry; fake FCM sender.
+Source/backend verification complete. No native build attempted.

@@ -1,0 +1,48 @@
+# EXAMPLE ONLY — do not place this file at the repository root or select it as a workflow.
+# Before using: verify the actual iOS bundle id from the unsigned build output;
+# enroll in Apple Developer Program; create the app in App Store Connect; connect
+# Codemagic to your team's Developer Portal; configure signing certificate, profiles,
+# and deployed API origin. Replace ALL uppercase placeholders in a separate signed
+# codemagic.yaml workflow. NEVER commit OAuth keys or signing keys.
+#
+# ios-testflight:
+#   name: AniRepro 360 - TestFlight
+#   instance_type: mac_mini_m2
+#   max_build_duration: 120
+#   integrations:
+#     app_store_connect: YOUR_CODEMAGIC_APP_STORE_CONNECT_INTEGRATION_NAME
+#   environment:
+#     flutter: "3.38.4"
+#     xcode: "26.4"
+#     cocoapods: default
+#     ios_signing:
+#       distribution_type: app_store
+#       bundle_identifier: YOUR_ACTUAL_EXISTING_BUNDLE_IDENTIFIER
+#     groups:
+#       - anirepro_testflight
+#   scripts:
+#     - name: Generate and test
+#       script: |
+#         set -eu
+#         cd mobile
+#         python3 tools/bootstrap.py --check
+#     - name: Set up profiles
+#       script: |
+#         cd mobile
+#         xcode-project use-profiles
+#     - name: Build signed IPA
+#       script: |
+#         set -eu
+#         : "${API_BASE_URL:?Configure your public HTTPS API origin in Codemagic secrets}"
+#         case "$API_BASE_URL" in https://*) ;; *) echo "HTTPS required"; exit 1;; esac
+#         cd mobile
+#         flutter build ipa --release \
+#           --dart-define=API_BASE_URL="$API_BASE_URL" \
+#           --export-options-plist=/Users/builder/export_options.plist
+#   artifacts:
+#     - mobile/build/ios/ipa/*.ipa
+#     - mobile/build/ios/archive/*.xcarchive
+#   publishing:
+#     app_store_connect:
+#       auth: integration
+#       submit_to_testflight: true

@@ -1,0 +1,18 @@
+AniRepro 360 mobile UI polish (source v2.3.0+9)
+Source: uploaded mobile(1).zip, base v2.2.0+8
+2026-11-21
+
+PASS: Existing companion FastAPI tests 28/28 on disposable SQLite.
+PASS: tools/verify_source.py: 36 Dart source/test import checks, Python syntax, original logo PNG headers, Android/iOS native configuration fixtures including repeat execution.
+PASS: Structural bracket check of all Dart source/test files (source-level only, not Dart compilation).
+PASS: No original mobile source files deleted. Original logo.png and app_icon.png retained byte-for-byte.
+
+WRITTEN, NOT EXECUTED (Flutter unavailable in this environment):
+- test/onboarding_test.dart
+- test/settings_navigation_test.dart
+- test/profile_photo_test.dart
+- test/report_comparisons_test.dart
+
+NOT RUN: flutter analyze, flutter test, physical Pixel/Samsung install, iOS build, real dark-mode accessibility audit, live main backend compatibility.
+
+Source caveats: the user's uploaded mobile zip is v2.2, not the separately maintained unified V3.0 project. The profile photo is encrypted device-local, NOT a production server upload. SRS prediction engine needs further clinical and species-reference validation. Real comparison charts use returned API records only and may be partial due to the 500-event API history cap.

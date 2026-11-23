@@ -1,0 +1,11 @@
+.env
+.env.*
+*.db*
+*.sqlite*
+.venv
+__pycache__
+**/__pycache__
+private-attachments
+.pytest_cache
+*.p8
+*.pem
